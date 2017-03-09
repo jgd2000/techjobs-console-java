@@ -1,8 +1,6 @@
 package org.launchcode.techjobs.console;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -60,11 +58,14 @@ public class TechJobs {
                 System.out.println("\nSearch term: ");
                 String searchTerm = in.nextLine();
 
-                if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
-                } else {
+   //             //temporary comment out
+   //             if (searchField.equals("all")) {
+
+   //                 printJobs(JobData.findByAllColumnsAndValue(searchField, searchTerm));
+   //             } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
-                }
+
+   //             }
             }
         }
     }
@@ -111,6 +112,34 @@ public class TechJobs {
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        int checkit;
+        checkit = someJobs.size();
+
+        if (checkit > 0) {
+            System.out.println("\n" + checkit + " Jobs Found");
+
+            System.out.println("\n\nList of Jobs");
+
+
+            for (int i = 0; i < someJobs.size(); i++) {
+                HashMap<String, String> tmpData = (HashMap<String, String>) someJobs.get(i);
+                Set<String> key = tmpData.keySet();
+                Iterator it = key.iterator();
+                while (it.hasNext()) {
+                    String hmKey = (String) it.next();
+                    if (hmKey.equals("position type")) {
+                        System.out.println("\n********************\n");
+                    }
+
+                    String hmData = (String) tmpData.get(hmKey);
+
+                    System.out.println(hmKey + ":  " + hmData);
+                    //             it.remove(); //avoids a ConcurrentModificationException
+                }
+
+            }
+        }else{
+            System.out.println("\n No Jobs Found With This Criteria");
+        }
     }
 }
